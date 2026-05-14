@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}- Dashboard{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h2 class="mb-3">Dashboard</h2>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="card bg-danger text-white h-100">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <h5 class="card-title fw-normal">You Owe</h5>
+                        <h2 class="fw-bold mb-0">₹{{ total_owed }}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card bg-success text-white h-100">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <h5 class="card-title fw-normal">You Are Owed</h5>
+                        <h2 class="fw-bold mb-0">₹{{ total_owed_to_user }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8 mb-4">
+        <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center py-3">
+                <h5 class="mb-0 fw-bold">Your Groups</h5>
+                <a href="{% url 'create_group' %}" class="btn btn-sm btn-outline-primary">+ New Group</a>
+            </div>
+            <div class="card-body p-0">
+                {% if groups %}
+                    <ul class="list-group list-group-flush">
+                        {% for group in groups %}
+                            <li class="list-group-item p-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-1"><a href="{% url 'group_detail' group.id %}" class="text-decoration-none text-body">{{ group.name }}</a></h6>
+                                        <small class="text-muted">{{ group.members.count }} members</small>
+                                    </div>
+                                    <a href="{% url 'group_detail' group.id %}" class="btn btn-sm btn-outline-secondary">View</a>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <div class="p-4 text-center text-muted">
+                        <p>You are not part of any groups yet.</p>
+                        <a href="{% url 'create_group' %}" class="btn btn-primary">Create Your First Group</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 mb-4">
+        <div class="card h-100">
+            <div class="card-header py-3">
+                <h5 class="mb-0 fw-bold">Recent Expenses</h5>
+            </div>
+            <div class="card-body p-0">
+                {% if recent_expenses %}
+                    <ul class="list-group list-group-flush">
+                        {% for expense in recent_expenses %}
+                            <li class="list-group-item p-3">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span class="fw-semibold">{{ expense.title }}</span>
+                                    <span class="fw-bold text-body">₹{{ expense.amount }}</span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <small class="text-muted">Paid by {{ expense.paid_by.username }}</small>
+                                    <small class="text-muted">{{ expense.group.name }}</small>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <div class="p-4 text-center text-muted">
+                        <small>No recent expenses.</small>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

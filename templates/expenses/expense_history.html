@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}- Expense History{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12 d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">History - {{ group.name }}</h2>
+        <a href="{% url 'group_detail' group.id %}" class="btn btn-outline-secondary">Back to Group</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body p-0">
+                {% if expenses %}
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0 align-middle">
+                            <thead class="table-secondary">
+                                <tr>
+                                    <th class="py-3 px-4">Date</th>
+                                    <th class="py-3 px-4">Description</th>
+                                    <th class="py-3 px-4">Paid By</th>
+                                    <th class="py-3 px-4 text-end">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for expense in expenses %}
+                                    <tr>
+                                        <td class="px-4 text-muted">{{ expense.date|date:"M d, Y" }}</td>
+                                        <td class="px-4 fw-semibold">{{ expense.title }}</td>
+                                        <td class="px-4">
+                                            <span class="badge bg-secondary">{{ expense.paid_by.username }}</span>
+                                        </td>
+                                        <td class="px-4 text-end fw-bold">₹{{ expense.amount }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="p-5 text-center text-muted">
+                        <h4>No expenses yet!</h4>
+                        <p>Go ahead and add the first expense for this group.</p>
+                        <a href="{% url 'add_expense' group.id %}" class="btn btn-primary mt-2">Add Expense</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
