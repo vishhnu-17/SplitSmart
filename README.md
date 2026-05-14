@@ -12,7 +12,7 @@
 - **Smart Balance Calculation**: View exactly who owes whom (e.g., "Rahul owes Vishnu ₹200") with net balance logic.
 - **Settlement System**: Mark balances as settled with a single click.
 - **Modern Responsive UI**: Built with Bootstrap 5, featuring a clean layout that works on desktop and mobile.
-- ** Dark Mode**: Built-in light and dark mode toggle with preference persistence (localStorage).
+- **Dark Mode**: Built-in light and dark mode toggle with preference persistence (localStorage).
 
 
 
